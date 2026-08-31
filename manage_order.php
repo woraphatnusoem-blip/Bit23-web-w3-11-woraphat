@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ข้อมูลห้องพัก - StayManager</title>
+    <title>จัดการข้อมูลการเข้าพัก - StayManager</title>
     <!-- Google Fonts for clean minimalist typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
-    :root {
+
+:root {
             --bg-color: #0f0c1b;
             --card-bg: #1a162b;
             --text-primary: #ffffff;
@@ -20,6 +21,10 @@
             --hover-bg: #321347;
             --badge-bg: #ffe600;
             --badge-text: #0f0c1b;
+            --danger-color: #ff0055;
+            --danger-hover: #ff007f;
+            --edit-color: #00ffcc;
+            --edit-hover: #ffe600;
         }
 
         * {
@@ -126,9 +131,12 @@
             flex: 1;
         }
 
-        /* --- Page Header --- */
+        /* --- Header Section --- */
         .page-header {
             margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
             padding-bottom: 1.25rem;
             border-bottom: 2px solid #00ffcc;
         }
@@ -147,7 +155,7 @@
             margin-top: 0.25rem;
         }
 
-        /* --- Table Card Minimalist --- */
+        /* --- Table Styling --- */
         .table-card {
             background-color: var(--card-bg);
             border: 2px solid var(--border-color);
@@ -174,7 +182,6 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: #ffe600;
-            border: none;
         }
 
         td {
@@ -197,6 +204,19 @@
             background-color: var(--hover-bg);
         }
 
+        /* Cell Specifics */
+        .order-id {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #00ffcc;
+            font-weight: 700;
+            text-shadow: 0 0 5px #00ffcc;
+        }
+
+        .guest-name {
+            font-weight: 600;
+        }
+
         .room-badge {
             display: inline-block;
             padding: 0.3rem 0.8rem;
@@ -208,15 +228,62 @@
             box-shadow: 0 0 10px var(--badge-bg);
         }
 
-        .price-text {
-            font-weight: 700;
-            color: #00ffcc;
-            text-shadow: 0 0 5px #00ffcc;
+        .img-thumb {
+            width: 64px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 2px solid #00ffcc;
+            display: block;
+            background-color: #2a2144;
+            box-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
         }
 
-        /* --- Action Links --- */
+        /* --- Action Buttons --- */
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 0.4rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.825rem;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            margin-right: 0.35rem;
+        }
+
+        .btn-edit {
+            background-color: transparent;
+            color: #00ffcc;
+            border: 1px solid #00ffcc;
+            box-shadow: 0 0 5px rgba(0, 255, 204, 0.3);
+        }
+
+        .btn-edit:hover {
+            background-color: #00ffcc;
+            color: #0f0c1b;
+            box-shadow: 0 0 12px #00ffcc;
+        }
+
+        .btn-delete {
+            background-color: transparent;
+            color: #ff0055;
+            border: 1px solid #ff0055;
+            box-shadow: 0 0 5px rgba(255, 0, 85, 0.3);
+        }
+
+        .btn-delete:hover {
+            background-color: #ff0055;
+            color: #ffffff;
+            box-shadow: 0 0 12px #ff0055;
+        }
+
+        /* --- Quick Action Links Bar --- */
         .action-bar {
             margin-top: 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
         }
 
         .action-link {
@@ -277,7 +344,7 @@
         }
 
         @media (max-width: 768px) {
-            .nav-container, .footer-container {
+            .nav-container, .page-header, .footer-container {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 1rem;
@@ -288,71 +355,91 @@
             th, td {
                 padding: 0.75rem 0.5rem;
             }
+            .img-thumb {
+                width: 50px;
+                height: 40px;
+            }
         }
-    </style>
-
-    </head>
+        </style>
+</head>
 <body>
 
     <!-- Navigation Bar (เชื่อมโยง 5 หน้าหลัก) -->
     <nav class="navbar">
         <div class="nav-container">
-           
+          
             <ul class="nav-menu">
                 <li><a href="index.php" class="nav-link">รายชื่อเข้าพัก</a></li>
-                <li><a href="room.php" class="nav-link active">ห้องพัก</a></li>
-                <li><a href="manage_order.php" class="nav-link">จัดการรายการ</a></li>
+                <li><a href="room.php" class="nav-link">ห้องพัก</a></li>
+                <li><a href="manage_order.php" class="nav-link active">จัดการรายการ</a></li>
                 
                 <li><a href="add_order.php" class="nav-link btn-add">+ เพิ่มข้อมูล</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Main Content Container -->
+    <!-- Main Content -->
     <main class="main-container">
+        
+        <?php
+        include "action/connect.php";
+        $sql = "SELECT * FROM orders";
+        $result = mysqli_query($con, $sql);
+        ?>
 
         <header class="page-header">
-            <h1 class="page-title">ข้อมูลผู้เข้าพัก / รายละเอียดห้องพัก</h1>
-            <p class="page-subtitle">แสดงรายการห้องพักและสิ่งอำนวยความสะดวกทั้งหมด</p>
+            <div>
+                <h1 class="page-title">จัดการข้อมูลการเข้าพัก</h1>
+                <p class="page-subtitle">แก้ไขหรือลบรายการข้อมูลผู้เข้าพัก</p>
+            </div>
         </header>
-
-        <?php
-            include "action/connect.php";
-
-            // ดึงทั้งหมด จากตาราง rooms
-            $sql = "SELECT * FROM rooms";
-            $result = mysqli_query($con, $sql);
-        ?>
 
         <div class="table-card">
             <table>
                 <thead>
                     <tr>
                         <th>รหัสรายการ</th>
-                        <th>สูบบุหรี่</th>
-                        <th>อ่างอาบน้ำ</th>
-                        <th>ราคา</th>
+                        <th>ชื่อผู้เข้าพัก</th>
+                        <th>ชำระเงิน</th>
+                        <th>ประเภท</th>
+                        <th>ห้อง</th>
+                        <th>ภาพ</th>
+                        <th>จัดการ</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                        foreach($result as $rooms){
-                            ?>  
-                                <tr>
-                                    <td><span class="room-badge">ห้อง <?= htmlspecialchars($rooms["room_id"]) ?></span></td>
-                                    <td><?= htmlspecialchars($rooms["smoke"]) ?></td>
-                                    <td><?= htmlspecialchars($rooms["bathtub"]) ?></td>
-                                    <td class="price-text"><?= htmlspecialchars($rooms["price"]) ?> บาท</td>
-                                </tr>
-                            <?php
-                        }
+                    foreach($result as $order){
+                    ?>
+                    <tr>
+                        <td class="order-id">#<?= htmlspecialchars($order["orders_id"]) ?></td>
+                        <td class="guest-name"><?= htmlspecialchars($order["name"]) ?></td>
+                        <td><?= htmlspecialchars($order["payment"]) ?></td>
+                        <td><?= htmlspecialchars($order["usege_type"]) ?></td>
+                        <td><span class="room-badge">ห้อง <?= htmlspecialchars($order["room_id"]) ?></span></td>
+                        <td>
+                            <img 
+                                src="<?= htmlspecialchars($order["image"]) ?>"
+                                alt="ภาพสลิป/ผู้เข้าพัก"
+                                class="img-thumb"
+                            >
+                        </td>
+                        <td>
+                            <a href="edit_order.php?id=<?= $order["orders_id"] ?>" class="btn-action btn-edit">แก้ไข</a>
+                            <a href="action/delete_order.php?id=<?= $order["orders_id"] ?>" class="btn-action btn-delete" onclick="return confirm('คุณต้องการลบรายการนี้ใช่หรือไม่?')">ลบ</a>
+                        </td>
+                    </tr>
+                    <?php
+                    }
                     ?>
                 </tbody>
             </table>
         </div>
 
+        <!-- ปุ่มกดลิงก์เดิม -->
         <div class="action-bar">
-            <a href="index.php" class="action-link">กลับหน้า orders</a>
+            <a href="add_order.php" class="action-link">เพิ่ม</a>
+            <a href="index.php" class="action-link">กลับหน้า index</a>
         </div>
 
     </main>
@@ -360,13 +447,13 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
-          <p>&copy; <?= date("Y") ?> woraphat nusoem</p>
+            <p>&copy; <?= date("Y") ?> woraphat nusoem</p>
             <div class="footer-links">
                 <a href="index.php">หน้าแรก</a>
                 <a href="room.php">ห้องพัก</a>
                 <a href="add_order.php">เพิ่มข้อมูล</a>
                 <a href="manage_order.php">แก้ไขข้อมูล</a>
-              
+            
             </div>
         </div>
     </footer>

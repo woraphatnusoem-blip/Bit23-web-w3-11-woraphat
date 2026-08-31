@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ข้อมูลห้องพัก - StayManager</title>
+    <title>แก้ไขข้อมูลการเข้าพัก - StayManager</title>
     <!-- Google Fonts for clean minimalist typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
-    :root {
+        :root {
             --bg-color: #0f0c1b;
             --card-bg: #1a162b;
             --text-primary: #ffffff;
@@ -18,8 +18,7 @@
             --border-color: #ff007f;
             --accent-color: #ff0055;
             --hover-bg: #321347;
-            --badge-bg: #ffe600;
-            --badge-text: #0f0c1b;
+            --input-bg: #261b3e;
         }
 
         * {
@@ -119,126 +118,121 @@
 
         /* --- Layout Container --- */
         .main-container {
-            max-width: 1100px;
+            max-width: 550px;
             width: 100%;
             margin: 2.5rem auto;
             padding: 0 1.5rem;
             flex: 1;
         }
 
-        /* --- Page Header --- */
-        .page-header {
-            margin-bottom: 2rem;
-            padding-bottom: 1.25rem;
-            border-bottom: 2px solid #00ffcc;
-        }
-
-        .page-title {
-            font-size: 1.65rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .page-subtitle {
-            font-size: 0.9rem;
-            color: #00ffcc;
-            margin-top: 0.25rem;
-        }
-
-        /* --- Table Card Minimalist --- */
-        .table-card {
+        /* --- Form Card Minimalist --- */
+        .form-card {
             background-color: var(--card-bg);
             border: 2px solid var(--border-color);
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.25);
+            padding: 2rem;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
+        .form-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #00ffcc;
         }
 
-        thead {
-            background-color: #261b3e;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        th {
-            padding: 1.1rem 1.25rem;
-            font-size: 0.85rem;
+        .form-title {
+            font-size: 1.35rem;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #ffe600;
-            border: none;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
         }
 
-        td {
-            padding: 1.1rem 1.25rem;
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            border-bottom: 1px solid #2a2144;
-            vertical-align: middle;
-        }
-
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        tbody tr {
-            transition: all 0.15s ease;
-        }
-
-        tbody tr:hover {
-            background-color: var(--hover-bg);
-        }
-
-        .room-badge {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background-color: var(--badge-bg);
-            color: var(--badge-text);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            box-shadow: 0 0 10px var(--badge-bg);
-        }
-
-        .price-text {
-            font-weight: 700;
+        .form-subtitle {
+            font-size: 0.88rem;
             color: #00ffcc;
-            text-shadow: 0 0 5px #00ffcc;
+            margin-top: 0.2rem;
         }
 
-        /* --- Action Links --- */
-        .action-bar {
-            margin-top: 1.5rem;
+        .form-group {
+            margin-bottom: 1.25rem;
         }
 
-        .action-link {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.65rem 1.25rem;
+        label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #ffe600;
+            margin-bottom: 0.4rem;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 0.7rem 0.85rem;
+            background-color: var(--input-bg);
+            border: 2px solid #2a2144;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            background-color: #1a162b;
+            border-color: #00ffcc;
+            box-shadow: 0 0 12px #00ffcc;
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 12px var(--accent-color);
+        }
+
+        button:hover {
+            background-color: #ffe600;
+            color: #0f0c1b;
+            box-shadow: 0 0 18px #ffe600;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .back-link-wrapper {
+            margin-top: 1.25rem;
+            text-align: center;
+        }
+
+        .back-link-wrapper a {
+            display: inline-block;
+            text-decoration: none;
+            color: #00ffcc;
             font-size: 0.875rem;
             font-weight: 600;
-            color: #00ffcc;
-            background-color: var(--card-bg);
-            border: 2px solid #00ffcc;
-            border-radius: 8px;
-            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
             transition: all 0.2s ease;
-            box-shadow: 0 0 8px rgba(0, 255, 204, 0.3);
         }
 
-        .action-link:hover {
-            background-color: #00ffcc;
-            color: #0f0c1b;
-            box-shadow: 0 0 15px #00ffcc;
-            transform: translateY(-2px);
+        .back-link-wrapper a:hover {
+            color: #ffe600;
+            background-color: var(--hover-bg);
+            box-shadow: 0 0 8px #ff007f;
         }
 
         /* --- Footer Minimalist --- */
@@ -268,7 +262,6 @@
             color: #00ffcc;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.2s ease;
         }
 
         .footer-links a:hover {
@@ -285,9 +278,6 @@
             .nav-menu {
                 flex-wrap: wrap;
             }
-            th, td {
-                padding: 0.75rem 0.5rem;
-            }
         }
     </style>
 
@@ -297,11 +287,11 @@
     <!-- Navigation Bar (เชื่อมโยง 5 หน้าหลัก) -->
     <nav class="navbar">
         <div class="nav-container">
-           
+            
             <ul class="nav-menu">
                 <li><a href="index.php" class="nav-link">รายชื่อเข้าพัก</a></li>
-                <li><a href="room.php" class="nav-link active">ห้องพัก</a></li>
-                <li><a href="manage_order.php" class="nav-link">จัดการรายการ</a></li>
+                <li><a href="room.php" class="nav-link">ห้องพัก</a></li>
+                <li><a href="manage_order.php" class="nav-link active">จัดการรายการ</a></li>
                 
                 <li><a href="add_order.php" class="nav-link btn-add">+ เพิ่มข้อมูล</a></li>
             </ul>
@@ -311,48 +301,78 @@
     <!-- Main Content Container -->
     <main class="main-container">
 
-        <header class="page-header">
-            <h1 class="page-title">ข้อมูลผู้เข้าพัก / รายละเอียดห้องพัก</h1>
-            <p class="page-subtitle">แสดงรายการห้องพักและสิ่งอำนวยความสะดวกทั้งหมด</p>
-        </header>
-
         <?php
+            $id = isset($_GET["id"]) ? $_GET["id"] : '';
+
             include "action/connect.php";
 
-            // ดึงทั้งหมด จากตาราง rooms
-            $sql = "SELECT * FROM rooms";
+            $sql = "SELECT * FROM orders WHERE orders_id ='$id' ";
+
             $result = mysqli_query($con, $sql);
+
+            $order = mysqli_fetch_assoc($result);
+
+            //var_dump($order);
         ?>
 
-        <div class="table-card">
-            <table>
-                <thead>
-                    <tr>
-                        <th>รหัสรายการ</th>
-                        <th>สูบบุหรี่</th>
-                        <th>อ่างอาบน้ำ</th>
-                        <th>ราคา</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        foreach($result as $rooms){
-                            ?>  
-                                <tr>
-                                    <td><span class="room-badge">ห้อง <?= htmlspecialchars($rooms["room_id"]) ?></span></td>
-                                    <td><?= htmlspecialchars($rooms["smoke"]) ?></td>
-                                    <td><?= htmlspecialchars($rooms["bathtub"]) ?></td>
-                                    <td class="price-text"><?= htmlspecialchars($rooms["price"]) ?> บาท</td>
-                                </tr>
+        <div class="form-card">
+            <div class="form-header">
+                <h1 class="form-title">แก้ไขข้อมูลการเข้าพัก</h1>
+                <p class="form-subtitle">แก้ไขรายละเอียดรายการเข้าพัก รหัส #<?= htmlspecialchars($id) ?></p>
+            </div>
+
+            <form action="action/update_order.php" method="post">
+                <div class="form-group">
+                    <label for="name">ชื่อผู้เข้าพัก</label>
+                    <input type="text" id="name" name="name" value="<?= isset($order["name"]) ? htmlspecialchars($order["name"]) : '' ?>"> <br>
+                </div>
+
+                <div class="form-group">
+                    <label for="payment">การใช้เงิน</label>
+                    <input type="text" id="payment" name="payment" value="<?= isset($order["payment"]) ? htmlspecialchars($order["payment"]) : '' ?>"> <br>
+                </div>
+
+                <div class="form-group">
+                    <label for="usage_type">ประเภคการใช้งาน</label>
+                    <input type="text" id="usage_type" name="usage_type" value="<?= isset($order["usage_type"]) ? htmlspecialchars($order["usage_type"]) : '' ?>"> <br>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">ภาพผู้เข้าพัก</label>
+                    <input type="text" id="image" name="image" value="<?= isset($order["image"]) ? htmlspecialchars($order["image"]) : '' ?>"> <br>
+                </div>
+
+                <?php
+                include "action/connect.php";
+                // ดึงทั้งหมด จากตาราง orders
+                $sql = "SELECT * FROM rooms";
+                $result = mysqli_query($con, $sql);
+                ?>
+
+                <div class="form-group">
+                    <label for="room_id">เลือกห้องพัก</label>
+                    <select name="room_id" id="room_id">
+                        <?php 
+                        foreach($result as $room){
+                            $selected = (isset($order["room_id"]) && $order["room_id"] == $room['room_id']) ? 'selected' : '';
+                            ?>
+                            <option value="<?= $room["room_id"]?>" <?= $selected ?>>
+                                <?= $room["room_id"]."_". $room["price"] . "บาท"?>
+                            </option>
                             <?php
                         }
-                    ?>
-                </tbody>
-            </table>
+                        ?>
+                    </select>
+                </div>
+
+                <input type="hidden" name="orders_id" value="<?= isset($order['orders_id']) ? htmlspecialchars($order['orders_id']) : '' ?>">
+                <br>
+                <button type="submit">บันทึก</button>
+            </form>
         </div>
 
-        <div class="action-bar">
-            <a href="index.php" class="action-link">กลับหน้า orders</a>
+        <div class="back-link-wrapper">
+            <a href="index.php">กลับหน้าindex</a>
         </div>
 
     </main>
@@ -366,7 +386,7 @@
                 <a href="room.php">ห้องพัก</a>
                 <a href="add_order.php">เพิ่มข้อมูล</a>
                 <a href="manage_order.php">แก้ไขข้อมูล</a>
-              
+             
             </div>
         </div>
     </footer>
